@@ -49,3 +49,48 @@ document.toggleSelection = function (productId) {
         selectedProducts.delete(productId);
     }
 };
+
+const addToCartButton = document.getElementById('add-to-cart');
+const calculatePriceButton = document.getElementById('calculate-price');
+
+addToCartButton.addEventListener('click', () => {
+    const selectedProductArray = Array.from(selectedProducts).map(id => products.find(p => p.id === id));
+    displayCart(selectedProductArray);
+
+    if (selectedProductArray.length > 0) {
+        calculatePriceButton.classList.remove('hidden');
+    } else {
+        calculatePriceButton.classList.add('hidden');
+    }
+});
+
+const cart = document.getElementById('cart');
+
+function displayCart(selectedProductArray) {
+    cart.innerHTML = '';
+    selectedProductArray.forEach(item => {
+        const cartItemDiv = document.createElement('div');
+        cartItemDiv.classList.add('cart-item');
+        cartItemDiv.innerHTML = `
+            <img src="${item.imageUrl}" alt="${item.name}">
+            <h3>${item.name}</h3>
+            <p>$${item.price.toFixed(2)}</p>
+            <button onclick="removeFromCart(${item.id})">Remove</button>
+        `;
+        cart.appendChild(cartItemDiv);
+    });
+}
+
+document.removeFromCart = function (productId) {
+    selectedProducts.delete(productId);
+    const selectedProductArray = Array.from(selectedProducts).map(id => products.find(p => p.id === id));
+    displayCart(selectedProductArray);
+    document.getElementById(`select-${productId}`).checked = false;
+
+    if (selectedProductArray.length > 0) {
+        calculatePriceButton.classList.remove('hidden');
+    } else {
+        calculatePriceButton.classList.add('hidden');
+        totalPriceElement.textContent = `You have to pay: $0`;
+    }
+};

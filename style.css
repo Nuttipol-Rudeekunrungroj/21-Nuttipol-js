@@ -35,24 +35,25 @@ button {
     margin-top: 10px;
 }
 
-.hidden {
-    display: none;
-}
 
-#product-dashboard{
+#product-dashboard, #cart{
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-.product  {
+.product, .cart-item  {
     border: 1px solid #ddd;
     padding: 10px;
     width: calc(33.333% - 20px);
     box-sizing: border-box;
 }
 
-.product img {
+.product img, .cart-item img {
     max-width: 100%;
     height: auto;
+}
+
+.hidden {
+    display: none;
 }
