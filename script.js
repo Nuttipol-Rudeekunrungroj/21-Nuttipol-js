@@ -31,7 +31,7 @@ function displayProducts() {
     const productDiv = document.createElement("div");
     productDiv.classList.add("product");
     productDiv.innerHTML = `
-    <input type="checkbox" id="select-${product.id}" onchange="toggleSelection(${product.id})">
+    <input type="checkbox" id="select-${product.id}" onchange="toggleSelection(${product.id})" ${selectedProducts.has(product.id) ? 'checked' : ''}>
     <img src="${product.imageUrl}" alt="${product.name}">
     <h3>${product.name}</h3>
     <p>${product.price.toFixed(2)}</p>
@@ -94,3 +94,14 @@ document.removeFromCart = function (productId) {
         totalPriceElement.textContent = `You have to pay: $0`;
     }
 };
+
+    const totalPriceElement = document.getElementById('total-price');
+
+calculatePriceButton.addEventListener('click', () => {
+    const totalPrice = Array.from(selectedProducts).reduce((total, id) => {
+        const product = products.find(p => p.id === id);
+        return total + product.price;
+    }, 0);
+    totalPriceElement.textContent = `You have to pay: $${totalPrice.toFixed(2)}`;
+    
+});
