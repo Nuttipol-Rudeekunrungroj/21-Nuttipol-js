@@ -31,7 +31,7 @@ function displayProducts() {
     const productDiv = document.createElement("div");
     productDiv.classList.add("product");
     productDiv.innerHTML = `
-    <input type="checkbox" id="select-${product.id}">
+    <input type="checkbox" id="select-${product.id}" onchange="toggleSelection(${product.id})">
     <img src="${product.imageUrl}" alt="${product.name}">
     <h3>${product.name}</h3>
     <p>${product.price.toFixed(2)}</p>
@@ -39,3 +39,13 @@ function displayProducts() {
     productDashboard.appendChild(productDiv);
   });
 }
+
+let selectedProducts = new Set();
+document.toggleSelection = function (productId) {
+    const checkbox = document.getElementById(`select-${productId}`);
+    if (checkbox.checked) {
+        selectedProducts.add(productId);
+    } else {
+        selectedProducts.delete(productId);
+    }
+};
