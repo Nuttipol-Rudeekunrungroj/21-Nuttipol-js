@@ -3,10 +3,10 @@ let products = [];
 
 productForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const productName = document.getElementById('product-name').value;
-  const price = parseFloat(document.getElementById('price').value);
-  const imageUrl = document.getElementById('image').value;
-  
+  const productName = document.getElementById("product-name").value;
+  const price = parseFloat(document.getElementById("price").value);
+  const imageUrl = document.getElementById("image").value;
+
   if (isNaN(price) || price <= 0) {
     alert("price ต้องเป็นตัวเลขและมากกว่า 0.");
     return;
@@ -23,4 +23,19 @@ productForm.addEventListener("submit", (e) => {
   productForm.reset();
 });
 
-function displayProducts() {}
+const productDashboard = document.getElementById("product-dashboard");
+
+function displayProducts() {
+  productDashboard.innerHTML = "";
+  products.forEach((product) => {
+    const productDiv = document.createElement("div");
+    productDiv.classList.add("product");
+    productDiv.innerHTML = `
+    <input type="checkbox" id="select-${product.id}">
+    <img src="${product.imageUrl}" alt="${product.name}">
+    <h3>${product.name}</h3>
+    <p>${product.price.toFixed(2)}</p>
+`;
+    productDashboard.appendChild(productDiv);
+  });
+}
